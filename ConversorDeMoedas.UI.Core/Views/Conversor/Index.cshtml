@@ -1,0 +1,46 @@
+﻿@model List<ConversorDeMoedas.UI.Core.Models.Conversor.ConversorViewModel>;
+@{
+    ViewData["Title"] = "View";
+}
+
+<h2>View</h2>
+@foreach (var mode in Model)
+{
+    <fieldset class="cinzadolayout" style="text-align:center">
+
+        <label>
+            Moedas<br />
+            @Html.DropDownList("ListModulos","(" +mode.Sigla + ")")
+        </label>
+    </fieldset>
+
+}
+
+
+
+
+
+
+@section Scripts {
+    <script>
+        @*$(function () {
+
+             $.ajax(
+                '@Url.Action("ListarSolucoes")',
+                {
+            success: function (retorno) {
+
+                        $.each(retorno, function () {
+                            $('<option>').text(this.SLDESCSOL).val(this.SLCODSOL).appendTo(listSolucoes);
+
+                });
+                listSolucoes.val('');
+            }
+        }
+            )
+        }*@
+
+
+
+    </script>
+}
