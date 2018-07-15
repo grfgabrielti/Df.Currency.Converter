@@ -9,7 +9,6 @@ namespace ConversorDeMoedas.ACL.Interface
     public interface IConversorACL
     {
         List<IMoeda> GetMoedas();
-        List<Dinheiro> ConverterMoeda();
         IMoeda GetCotacaoComBaseNoDolar(String SiglasDaMoeda);
     }
 }

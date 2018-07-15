@@ -12,5 +12,10 @@ namespace ConversorDeMoedas.Domain.Factory
         {
             return new Moeda(Siglas, Valor);
         }
+
+        public IMoeda Create(String Siglas, String NomeMoeda)
+        {
+            return new Moeda(Siglas, NomeMoeda);
+        }
     }
 }

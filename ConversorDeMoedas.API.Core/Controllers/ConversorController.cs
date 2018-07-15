@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ConversorDeMoedas.Services.Interface;
 using ConversorDeMoedas.Services.Interface.Factory;
+using ConversorDeMoedas.Services.Request;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,6 @@ namespace ConversorDeMoedas.API.Core.Controllers
         public ConversorController(IConversorService conversorService)
         {
             this.conversorService = conversorService;
-
         }
 
         [HttpGet]
@@ -27,15 +27,18 @@ namespace ConversorDeMoedas.API.Core.Controllers
         }
 
         [HttpGet]
-        [Route("ConverterMoeda/{MoedaOrigem}/{MoedaDestino}/{ValorMoedaOrigem}")]
-        public dynamic ConverterMoeda(String MoedaOrigem, String MoedaDestino, Decimal ValorMoedaOrigem)
+        [Route("ConverterMoeda/{SiglaMoedaOrigem}/{MoedaParaConversao}/{ValorParaConversao}")]
+        public dynamic ConverterMoeda(String SiglaMoedaOrigem, String MoedaParaConversao, Decimal ValorParaConversao)
         {
-            return conversorService.ConverterMoeda(MoedaOrigem, MoedaDestino , ValorMoedaOrigem);
-        }
-    }
+            ConverterMoedaRequest request = new ConverterMoedaRequest()
+            {
+                SiglaMoedaOrigem = SiglaMoedaOrigem,
+                MoedaParaConversao = MoedaParaConversao,
+                ValorParaConversao = ValorParaConversao
+            };
 
-    public class RequestGetConversão
-    {
-        public Int32 Id { get; set; }
+            return conversorService.ConverterMoeda(request);
+        }
+
     }
 }

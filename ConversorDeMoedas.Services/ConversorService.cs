@@ -4,6 +4,7 @@ using ConversorDeMoedas.Domain;
 using ConversorDeMoedas.Domain.Interface;
 using ConversorDeMoedas.Domain.Interface.Factory;
 using ConversorDeMoedas.Services.Interface;
+using ConversorDeMoedas.Services.Request;
 using System;
 using System.Collections.Generic;
 
@@ -25,19 +26,19 @@ namespace ConversorDeMoedas.Services
             return conversorACL.GetMoedas();
         }
 
-        public IMoeda ConverterMoeda(String MoedaOrigemSiglas, String MoedaParaConversao, Decimal ValorParaConversao )
+        public IMoeda ConverterMoeda(ConverterMoedaRequest converterMoedaRequest)
         {
             Decimal Resultado = 00.00M;
             IConversorACL conversorACL = conversorACLFactory.Create();
 
-            IMoeda MoedaOrigem = moedaFactory.Create(MoedaOrigemSiglas, ValorParaConversao);
+            IMoeda MoedaOrigem = moedaFactory.Create(converterMoedaRequest.SiglaMoedaOrigem, converterMoedaRequest.ValorParaConversao);
             IMoeda CotacaoEmDolarMoedaOrigem = conversorACL.GetCotacaoComBaseNoDolar(MoedaOrigem.SiglaMoeda);
             IMoeda dinhieroOrigemEmDolar = MoedaOrigem.ConverterParaDolar(CotacaoEmDolarMoedaOrigem);
 
-            IMoeda DinheiroResultado = moedaFactory.Create(MoedaParaConversao, Resultado);
-            IMoeda CotacaoEmDolarMoedaConvertida = conversorACL.GetCotacaoComBaseNoDolar(MoedaParaConversao);
+            IMoeda DinheiroResultado = moedaFactory.Create(converterMoedaRequest.MoedaParaConversao, Resultado);
+            IMoeda CotacaoEmDolarMoedaConvertida = conversorACL.GetCotacaoComBaseNoDolar(converterMoedaRequest.MoedaParaConversao);
 
-            return moedaFactory.Create(MoedaParaConversao, dinhieroOrigemEmDolar.ObterValorDaConversaoDeMoeda(CotacaoEmDolarMoedaConvertida));
+            return moedaFactory.Create(converterMoedaRequest.MoedaParaConversao, dinhieroOrigemEmDolar.ObterValorDaConversaoDeMoeda(CotacaoEmDolarMoedaConvertida));
         }
     }
 }

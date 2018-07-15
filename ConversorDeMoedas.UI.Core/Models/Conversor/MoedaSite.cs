@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace ConversorDeMoedas.UI.Core.Models.Conversor
 {
-    public class ConversorViewModel
+    public class MoedaSite
     {
-        public String siglaMoeda { get; set; }
-        public String nomeMoeda { get; set; }
+        public String SiglaMoeda { get; set; }
+        public Decimal Valor { get; set; }
     }
 }

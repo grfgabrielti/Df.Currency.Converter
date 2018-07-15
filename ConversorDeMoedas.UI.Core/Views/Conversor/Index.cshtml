@@ -1,20 +1,52 @@
 ﻿@model List<ConversorDeMoedas.UI.Core.Models.Conversor.ConversorViewModel>;
-@{
-    ViewData["Title"] = "View";
-}
 
-<h2>View</h2>
-@foreach (var mode in Model)
-{
-    <fieldset class="cinzadolayout" style="text-align:center">
+<h2>Conversor de moedas</h2>
 
-        <label>
-            Moedas<br />
-            @Html.DropDownList("ListModulos","(" +mode.Sigla + ")")
-        </label>
-    </fieldset>
 
-}
+<body>
+    <div id="box">
+        <table>
+            <tr>
+                <td>
+                    <h3>Moeda Origem</h3>
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    <input id="ValorOrigem" type="number" />
+
+                </td>
+                <td>
+                    <select id="Origem">
+                        <option value="">Escolha uma moeda</option>
+                    </select>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h3>Moeda Para Conversao</h3>
+                </td>
+            </tr>
+            <tr>
+            <tr>
+                <td>
+                    <input id="ValorConvertido" type="number" />
+
+                </td>
+                <td>
+                    <select id="OrigemDesejada">
+                        <option value="">Escolha uma moeda</option>
+                    </select>
+
+                </td>
+            </tr>
+        </table>
+        <br />
+        <button class="btn btn-default" id="btnConverter" style="">Converter</button>
+    </div>
+</body>
 
 
 
@@ -23,24 +55,38 @@
 
 @section Scripts {
     <script>
-        @*$(function () {
+        $(function () {
 
-             $.ajax(
-                '@Url.Action("ListarSolucoes")',
+            $.ajax(
+                '@Url.Action("GetMoedas")',
                 {
-            success: function (retorno) {
-
+                    success: function (retorno) {
                         $.each(retorno, function () {
-                            $('<option>').text(this.SLDESCSOL).val(this.SLCODSOL).appendTo(listSolucoes);
-
-                });
-                listSolucoes.val('');
-            }
-        }
+                            var text = this.siglaMoeda + ' (' + this.nomeMoeda  +  ')';
+                            $('<option>').text(text).val(this.siglaMoeda).appendTo(OrigemDesejada);
+                            $('<option>').text(text).val(this.siglaMoeda).appendTo(Origem);
+                        });
+                    }
+                }
             )
-        }*@
+        });
+        $("#btnConverter").click(function (e) {
+            var Origem= $("#Origem").val();
+            var Destino= $("#OrigemDesejada").val();
+            var Quantidade= $("#ValorOrigem").val();
 
 
-
+        $.post(
+        '@Url.Action("ConverterMoeda")',
+            {
+                Origem : $("#Origem").val(),
+                Destino: $("#OrigemDesejada").val(),
+                    Quantidade : $("#ValorOrigem").val()
+            },
+            function (data) {
+                $("#ValorConvertido").val(data.valor);
+                console.log(data);
+            });
+        });
     </script>
 }
