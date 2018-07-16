@@ -16,8 +16,8 @@ namespace ConversorDeMoedas.ACL
 {
     public class ConversorACL : IConversorACL
     {
-        private String ACCESS_KEY = "?access_key=c33c35cf4405c47d42a77c2b6e2eb3d1";
-        private String BASE_URL = "http://apilayer.net/api/";
+         String ACCESS_KEY = "?access_key=c33c35cf4405c47d42a77c2b6e2eb3d1";
+         String BASE_URL = "http://apilayer.net/api/";
         IMoedaFactory moedaFactory;
 
         public ConversorACL(IMoedaFactory moedaFactory)
@@ -33,26 +33,25 @@ namespace ConversorDeMoedas.ACL
             if (response.IsSuccessStatusCode)
             {
                 var retorno = JsonConvert.DeserializeXNode(response.Content.ReadAsStringAsync().Result, "Root");
-                return retorno.Root.Element("currencies").Elements().Select(c => moedaFactory.Create(c.Name.ToString(), c.Value)).ToList();
+                var resultado = retorno.Root.Element("currencies").Elements().Select(c => moedaFactory.Create(c.Name.ToString(), c.Value)).ToList();
+
+                return resultado;
             }
 
             throw new Exception("Não foi possivel obter as moedas");
         }
-
-
-
         public IMoeda GetCotacaoComBaseNoDolar(String SiglasDaMoeda)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(BASE_URL);
             HttpResponseMessage response = client.GetAsync("live" + ACCESS_KEY + "&currencies=" + SiglasDaMoeda).Result;
-
             if (response.IsSuccessStatusCode)
             {
                 var retorno = JsonConvert.DeserializeXNode(response.Content.ReadAsStringAsync().Result, "Root");
-                return retorno.Root.Element("quotes").Elements().Select(c => moedaFactory.Create(Convert.ToString(c.Name), Convert.ToDecimal(c.Value))).First();
+                var resultado = retorno.Root.Element("quotes").Elements().Select(c => moedaFactory.Create(Convert.ToString(c.Name), Convert.ToDecimal(c.Value))).First();
+                return resultado;
             }
-            throw new Exception("Não foi possivel obter a cotacao");
+            throw new Exception("Não foi possivel obter a cotacao da moeda desejada");
         }
     }
 }

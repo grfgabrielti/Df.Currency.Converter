@@ -23,7 +23,8 @@ namespace ConversorDeMoedas.Services
         public List<IMoeda> GetMoedas()
         {
             IConversorACL conversorACL = conversorACLFactory.Create();
-            return conversorACL.GetMoedas();
+            List<IMoeda> retorno = conversorACL.GetMoedas();
+            return retorno;
         }
 
         public IMoeda ConverterMoeda(ConverterMoedaRequest converterMoedaRequest)
@@ -35,8 +36,10 @@ namespace ConversorDeMoedas.Services
             IMoeda dinhieroOrigemEmDolar = MoedaOrigem.ConverterParaDolar(CotacaoEmDolarMoedaOrigem);
 
             IMoeda CotacaoEmDolarMoedaConvertida = conversorACL.GetCotacaoComBaseNoDolar(converterMoedaRequest.MoedaParaConversao);
+            Decimal valorDaConversao = dinhieroOrigemEmDolar.ObterValorDaConversaoDeMoeda(CotacaoEmDolarMoedaConvertida);
+            IMoeda result = moedaFactory.Create(converterMoedaRequest.MoedaParaConversao, valorDaConversao);
 
-            return moedaFactory.Create(converterMoedaRequest.MoedaParaConversao, dinhieroOrigemEmDolar.ObterValorDaConversaoDeMoeda(CotacaoEmDolarMoedaConvertida));
+            return result;
         }
     }
 }

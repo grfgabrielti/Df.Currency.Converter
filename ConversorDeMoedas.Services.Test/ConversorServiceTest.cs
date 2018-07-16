@@ -40,7 +40,6 @@ namespace ConversorDeMoedas.Services.Test
             aclFactoryMck.VerifyAll();
         }
 
-
         [Fact]
         public void TestListarMoedasUsandoAAPIExterna()
         {
@@ -54,11 +53,9 @@ namespace ConversorDeMoedas.Services.Test
         [Fact]
         public void TestDeConversaoDeMoeda()
         {
-
             Mock<IMoedaFactory> moedaFactoryMock = new Mock<IMoedaFactory>();
             Mock<IConversorACL> aclMck = new Mock<IConversorACL>();
             Mock<IConversorACLFactory> aclFactoryMck = new Mock<IConversorACLFactory>();
-
 
             ConverterMoedaRequest request = new ConverterMoedaRequest()
             {
@@ -66,27 +63,41 @@ namespace ConversorDeMoedas.Services.Test
                 MoedaParaConversao = "USD",
                 ValorParaConversao = 1M
             };
+
             IMoeda moedaOrigem = new Moeda(request.SiglaMoedaOrigem, request.ValorParaConversao);
 
-            IMoeda CotacaoDodolarDaMoedaOrigem = new Moeda("BRL", 3.84M);
-            aclMck.Setup(x => x.GetCotacaoComBaseNoDolar(moedaOrigem.SiglaMoeda)).Returns(CotacaoDodolarDaMoedaOrigem);
-
-            IMoeda dinhieroOrigemEmDolar = moedaOrigem.ConverterParaDolar(CotacaoDodolarDaMoedaOrigem);
-
-            IMoeda CotacaoEmDolarMoedaConvertida = new Moeda("USD", 1);
-            aclMck.Setup(x => x.GetCotacaoComBaseNoDolar(request.MoedaParaConversao)).Returns(CotacaoEmDolarMoedaConvertida);
-
-
-            IMoeda rsultmock = new Moeda(request.MoedaParaConversao, dinhieroOrigemEmDolar.ObterValorDaConversaoDeMoeda(CotacaoEmDolarMoedaConvertida));
-
+            aclMck.Setup(x => x.GetCotacaoComBaseNoDolar(request.SiglaMoedaOrigem)).Returns(new Moeda("BRL", 3.84M));
+            aclMck.Setup(x => x.GetCotacaoComBaseNoDolar(request.MoedaParaConversao)).Returns(new Moeda("USD", 1));
 
             aclFactoryMck.Setup(x => x.Create()).Returns(aclMck.Object);
+            moedaFactoryMock.Setup(x => x.Create("BRL", 1m)).Returns(moedaOrigem);
+            IMoeda MoedaParaConversao = new Moeda("USD", 0.25M);
+            moedaFactoryMock.Setup(x => x.Create("USD", It.IsAny<Decimal>())).Returns(MoedaParaConversao);
             IConversorService service = new ConversorService(aclFactoryMck.Object, moedaFactoryMock.Object);
             var result = service.ConverterMoeda(request);
 
-            Assert.True(rsultmock.Equals(result));
+            Assert.True(result != null);
+            Assert.True(result.Valor.Equals(MoedaParaConversao.Valor));
 
+            aclMck.VerifyAll();
+            aclFactoryMck.VerifyAll();
         }
 
+        [Fact]
+        public void TestDeConversaoDeMoedaAPIExterna()
+        {
+            IConversorService service = new ConversorService(new ConversorACLFactory(new MoedaFactory()), new MoedaFactory());
+            ConverterMoedaRequest request = new ConverterMoedaRequest()
+            {
+                SiglaMoedaOrigem = "BRL",
+                MoedaParaConversao = "USD",
+                ValorParaConversao = 1M
+            };
+
+            IMoeda result = service.ConverterMoeda(request);
+
+            Assert.True(result != null);
+            Assert.True(result.Valor >0 || result.Valor<0);
+        }
     }
 }

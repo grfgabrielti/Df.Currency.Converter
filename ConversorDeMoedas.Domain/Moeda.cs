@@ -7,7 +7,6 @@ namespace ConversorDeMoedas.Domain
     {
         public String SiglaMoeda { get; private set; }
         public String NomeMoeda { get; private set; }
-
         public Decimal Valor { get; private set; }
 
 
@@ -25,14 +24,18 @@ namespace ConversorDeMoedas.Domain
 
         public IMoeda ConverterParaDolar(IMoeda CotacaoDaMoedaEscolhidaEmDolar)
         {
-            if (CotacaoDaMoedaEscolhidaEmDolar.Valor > 1)
-                return new Moeda("USD", this.Valor / CotacaoDaMoedaEscolhidaEmDolar.Valor);
-            else
-                return new Moeda("USD", this.Valor * CotacaoDaMoedaEscolhidaEmDolar.Valor);
+            IMoeda result = null;
+            if (CotacaoDaMoedaEscolhidaEmDolar.Valor <= 0)
+                throw new Exception("Nao e possivel realizar o calculo sem a cotacao da moeda em dolar.");
+
+            result = new Moeda("USD", this.Valor / CotacaoDaMoedaEscolhidaEmDolar.Valor);
+            return result;
+
         }
         public Decimal ObterValorDaConversaoDeMoeda(IMoeda CotacaoEmDolarMoedaConvertida)
         {
-            return (this.Valor * CotacaoEmDolarMoedaConvertida.Valor);
+            var retorno = (this.Valor * CotacaoEmDolarMoedaConvertida.Valor);
+            return retorno;
         }
         public override bool Equals(object obj)
         {
@@ -48,7 +51,8 @@ namespace ConversorDeMoedas.Domain
         }
         public override int GetHashCode()
         {
-            return this.SiglaMoeda.GetHashCode() ^ this.Valor.GetHashCode();
+            int resultado =  this.SiglaMoeda.GetHashCode() ^ this.Valor.GetHashCode();
+            return resultado;
         }
     }
 }

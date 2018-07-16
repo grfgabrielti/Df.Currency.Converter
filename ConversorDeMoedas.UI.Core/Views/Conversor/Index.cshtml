@@ -75,18 +75,21 @@
             var Destino= $("#OrigemDesejada").val();
             var Quantidade= $("#ValorOrigem").val();
 
-
-        $.post(
-        '@Url.Action("ConverterMoeda")',
-            {
-                Origem : $("#Origem").val(),
-                Destino: $("#OrigemDesejada").val(),
-                    Quantidade : $("#ValorOrigem").val()
-            },
-            function (data) {
-                $("#ValorConvertido").val(data.valor);
-                console.log(data);
-            });
+            if (Origem == "" || Destino == "" || Quantidade=="") {
+               alert("Os campos devem estar preenchidos para realizar a conversao.")
+            }
+            else
+            $.post(
+            '@Url.Action("ConverterMoeda")',
+                {
+                    Origem : $("#Origem").val(),
+                    Destino: $("#OrigemDesejada").val(),
+                        Quantidade : $("#ValorOrigem").val()
+                },
+                function (data) {
+                    $("#ValorConvertido").val(data.valor);
+                    console.log(data);
+                });
         });
     </script>
 }
