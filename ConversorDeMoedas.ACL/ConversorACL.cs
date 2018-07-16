@@ -19,17 +19,14 @@ namespace ConversorDeMoedas.ACL
         private String ACCESS_KEY = "?access_key=c33c35cf4405c47d42a77c2b6e2eb3d1";
         private String BASE_URL = "http://apilayer.net/api/";
         IMoedaFactory moedaFactory;
-        //IRedisConnectorHelperFactory redisConnectorHelperFactory;
 
         public ConversorACL(IMoedaFactory moedaFactory)
         {
             this.moedaFactory = moedaFactory;
         }
+
         public List<IMoeda> GetMoedas()
         {
-            //var manager = new RedisManagerPool("localhost:6379");
-
-
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(BASE_URL);
             HttpResponseMessage response = client.GetAsync("list" + ACCESS_KEY).Result;
@@ -41,6 +38,8 @@ namespace ConversorDeMoedas.ACL
 
             throw new Exception("Não foi possivel obter as moedas");
         }
+
+
 
         public IMoeda GetCotacaoComBaseNoDolar(String SiglasDaMoeda)
         {

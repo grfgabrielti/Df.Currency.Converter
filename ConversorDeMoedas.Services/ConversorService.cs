@@ -28,14 +28,12 @@ namespace ConversorDeMoedas.Services
 
         public IMoeda ConverterMoeda(ConverterMoedaRequest converterMoedaRequest)
         {
-            Decimal Resultado = 00.00M;
             IConversorACL conversorACL = conversorACLFactory.Create();
 
             IMoeda MoedaOrigem = moedaFactory.Create(converterMoedaRequest.SiglaMoedaOrigem, converterMoedaRequest.ValorParaConversao);
             IMoeda CotacaoEmDolarMoedaOrigem = conversorACL.GetCotacaoComBaseNoDolar(MoedaOrigem.SiglaMoeda);
             IMoeda dinhieroOrigemEmDolar = MoedaOrigem.ConverterParaDolar(CotacaoEmDolarMoedaOrigem);
 
-            IMoeda DinheiroResultado = moedaFactory.Create(converterMoedaRequest.MoedaParaConversao, Resultado);
             IMoeda CotacaoEmDolarMoedaConvertida = conversorACL.GetCotacaoComBaseNoDolar(converterMoedaRequest.MoedaParaConversao);
 
             return moedaFactory.Create(converterMoedaRequest.MoedaParaConversao, dinhieroOrigemEmDolar.ObterValorDaConversaoDeMoeda(CotacaoEmDolarMoedaConvertida));
