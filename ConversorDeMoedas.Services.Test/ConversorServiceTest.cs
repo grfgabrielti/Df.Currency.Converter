@@ -77,7 +77,7 @@ namespace ConversorDeMoedas.Services.Test
             var result = service.ConverterMoeda(request);
 
             Assert.True(result != null);
-            Assert.True(result.Valor.Equals(MoedaParaConversao.Valor));
+            Assert.True(result.valor.Equals(MoedaParaConversao.Valor));
 
             aclMck.VerifyAll();
             aclFactoryMck.VerifyAll();
@@ -94,10 +94,10 @@ namespace ConversorDeMoedas.Services.Test
                 ValorParaConversao = 1M
             };
 
-            IMoeda result = service.ConverterMoeda(request);
+            var result = service.ConverterMoeda(request);
 
             Assert.True(result != null);
-            Assert.True(result.Valor >0 || result.Valor<0);
+            Assert.True(result.valor >0 || result.valor<0);
         }
     }
 }

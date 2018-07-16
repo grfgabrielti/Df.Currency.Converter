@@ -5,6 +5,7 @@ using ConversorDeMoedas.Domain.Interface;
 using ConversorDeMoedas.Domain.Interface.Factory;
 using ConversorDeMoedas.Services.Interface;
 using ConversorDeMoedas.Services.Request;
+using ConversorDeMoedas.Services.Request.Result;
 using System;
 using System.Collections.Generic;
 
@@ -27,7 +28,7 @@ namespace ConversorDeMoedas.Services
             return retorno;
         }
 
-        public IMoeda ConverterMoeda(ConverterMoedaRequest converterMoedaRequest)
+        public ConverterMoedaResult ConverterMoeda(ConverterMoedaRequest converterMoedaRequest)
         {
             IConversorACL conversorACL = conversorACLFactory.Create();
 
@@ -37,8 +38,12 @@ namespace ConversorDeMoedas.Services
 
             IMoeda CotacaoEmDolarMoedaConvertida = conversorACL.GetCotacaoComBaseNoDolar(converterMoedaRequest.MoedaParaConversao);
             Decimal valorDaConversao = dinhieroOrigemEmDolar.ObterValorDaConversaoDeMoeda(CotacaoEmDolarMoedaConvertida);
-            IMoeda result = moedaFactory.Create(converterMoedaRequest.MoedaParaConversao, valorDaConversao);
-
+            IMoeda MoedaConvertida = moedaFactory.Create(converterMoedaRequest.MoedaParaConversao, valorDaConversao);
+            ConverterMoedaResult result = new ConverterMoedaResult()
+            {
+                siglaMoeda = MoedaConvertida.SiglaMoeda,
+                valor = MoedaConvertida.Valor
+            };
             return result;
         }
     }
