@@ -18,11 +18,15 @@ namespace ConversorDeMoedas.ACL
 {
     public class ConversorACL : IConversorACL
     {
-        private Object farol = new Object();
+        private Object GetMoedasLock = new Object();
+        private Object GetCotacaoComBaseNoDolarLock = new Object();
+
         String ACCESS_KEY = "?access_key=c33c35cf4405c47d42a77c2b6e2eb3d1";
         String BASE_URL = "http://apilayer.net/api/";
+
         IMoedaFactory moedaFactory;
         IRedisConnectorHelperFactory redisConnectorHelperFactory;
+
         public ConversorACL(IMoedaFactory moedaFactory, IRedisConnectorHelperFactory redisConnectorHelperFactory)
         {
             this.moedaFactory = moedaFactory;
@@ -33,13 +37,14 @@ namespace ConversorDeMoedas.ACL
         {
 
             IRedisConnectorHelper redisConnectorHelper = redisConnectorHelperFactory.Create();
-            var cacheValue = redisConnectorHelper.Get<List<IMoeda>>("GetMoedasList");
+            String NomeCacheObject = "GetMoedasList1";
+            var cacheValue = redisConnectorHelper.Get<List<IMoeda>>(NomeCacheObject);
 
             if (cacheValue == null)
             {
-                lock (farol)
+                lock (GetMoedasLock)
                 {
-                    cacheValue = redisConnectorHelper.Get<List<IMoeda>>("GetMoedasList");
+                    cacheValue = redisConnectorHelper.Get<List<IMoeda>>(NomeCacheObject);
 
                     if (cacheValue == null)
                     {
@@ -50,7 +55,7 @@ namespace ConversorDeMoedas.ACL
                         {
                             var retorno = JsonConvert.DeserializeXNode(response.Content.ReadAsStringAsync().Result, "Root");
                             var resultado = retorno.Root.Element("currencies").Elements().Select(c => moedaFactory.Create(c.Name.ToString(), c.Value)).ToList();
-                            redisConnectorHelper.Set("GetMoedasList", resultado, 60);
+                            redisConnectorHelper.Set(NomeCacheObject, resultado, 60);
                             return resultado;
                         }
                         else
@@ -65,16 +70,34 @@ namespace ConversorDeMoedas.ACL
         }
         public IMoeda GetCotacaoComBaseNoDolar(String SiglasDaMoeda)
         {
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(BASE_URL);
-            HttpResponseMessage response = client.GetAsync("live" + ACCESS_KEY + "&currencies=" + SiglasDaMoeda).Result;
-            if (response.IsSuccessStatusCode)
+            IRedisConnectorHelper redisConnectorHelper = redisConnectorHelperFactory.Create();
+            String NomeCacheObject = "GetCotacaoComBaseNoDolar"+SiglasDaMoeda;
+            var cacheValue = redisConnectorHelper.Get<IMoeda>(NomeCacheObject);
+
+            if (cacheValue == null)
             {
-                var retorno = JsonConvert.DeserializeXNode(response.Content.ReadAsStringAsync().Result, "Root");
-                var resultado = retorno.Root.Element("quotes").Elements().Select(c => moedaFactory.Create(Convert.ToString(c.Name), Convert.ToDecimal(c.Value))).First();
-                return resultado;
+                lock (GetMoedasLock)
+                {
+                    cacheValue = redisConnectorHelper.Get<IMoeda>(NomeCacheObject);
+
+                    if (cacheValue == null)
+                    {
+
+                        HttpClient client = new HttpClient();
+                        client.BaseAddress = new Uri(BASE_URL);
+                        HttpResponseMessage response = client.GetAsync("live" + ACCESS_KEY + "&currencies=" + SiglasDaMoeda).Result;
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var retorno = JsonConvert.DeserializeXNode(response.Content.ReadAsStringAsync().Result, "Root");
+                            var resultado = retorno.Root.Element("quotes").Elements().Select(c => moedaFactory.Create(Convert.ToString(c.Name), Convert.ToDecimal(c.Value))).First();
+                            redisConnectorHelper.Set(NomeCacheObject, resultado, 5);
+                            return resultado;
+                        }
+                        throw new Exception("Não foi possivel obter a cotacao da moeda desejada");
+                    }
+                }
             }
-            throw new Exception("Não foi possivel obter a cotacao da moeda desejada");
+            return cacheValue;
         }
     }
 }

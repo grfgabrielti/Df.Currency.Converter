@@ -20,8 +20,8 @@ namespace ConversorDeMoedas.Services.Test
         public void TesteListarMoedas()
         {
             List<IMoeda> result = new List<IMoeda>();
-            result.Add(new Moeda("GABRIEL", 10));
-            result.Add(new Moeda("VIADO", 10));
+            result.Add(new Moeda("USD", 10));
+            result.Add(new Moeda("BRL", 10));
 
             Mock<IMoedaFactory> moedaFactoryMock = new Mock<IMoedaFactory>();
             Mock<IConversorACL> aclMck = new Mock<IConversorACL>();
@@ -46,7 +46,6 @@ namespace ConversorDeMoedas.Services.Test
             //IConversorService service = new ConversorService(new ConversorACLFactory(new MoedaFactory()), new MoedaFactory());
 
             //List<IMoeda> result = service.GetMoedas();
-
             //Assert.True(result.Count > 0);
         }
 

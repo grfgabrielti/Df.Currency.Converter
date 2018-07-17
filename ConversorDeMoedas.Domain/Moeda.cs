@@ -3,6 +3,7 @@ using System;
 
 namespace ConversorDeMoedas.Domain
 {
+    [Serializable]
     public class Moeda : IMoeda
     {
         public String SiglaMoeda { get; private set; }

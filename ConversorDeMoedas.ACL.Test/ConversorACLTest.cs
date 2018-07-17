@@ -15,14 +15,17 @@ namespace ConversorDeMoedas.ACL.Test
 {
     public class ConversorACLTest
     {
+        private readonly IDistributedCache _cache;
+
+
+    
         [Fact]
         public void TestQueDeveRetornarListaComAsMoedasSemValorSomenteSiglaENome()
         {
-          //  Mock<IRedisConnectorHelperFactory> mckRediscConnectorHelper = new Mock<IRedisConnectorHelperFactory>();
 
-          /// IConversorACL conversorACL = new ConversorACL(new MoedaFactory(), new RedisConnectorHelperFactory());
-          //  List<IMoeda> result = conversorACL.GetMoedas();
-          //  Assert.True(result.Count > 0);
+            IConversorACL conversorACL = new ConversorACL(new MoedaFactory(), new RedisConnectorHelperFactory(_cache));
+            List<IMoeda> result = conversorACL.GetMoedas();
+            Assert.True(result.Count > 0);
         }
 
         [Fact]

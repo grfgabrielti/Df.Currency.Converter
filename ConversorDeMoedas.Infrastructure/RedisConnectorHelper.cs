@@ -3,6 +3,8 @@ using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Newtonsoft.Json;
+using System.Runtime.Serialization.Json;
 
 namespace ConversorDeMoedas.Infrastructure
 {
@@ -57,7 +59,7 @@ namespace ConversorDeMoedas.Infrastructure
             BinaryFormatter objBinaryFormatter = new BinaryFormatter();
             using (MemoryStream objMemoryStream = new MemoryStream())
             {
-                objBinaryFormatter.Serialize(objMemoryStream, obj);
+                objBinaryFormatter.Serialize(objMemoryStream,obj);
                 byte[] objDataAsByte = objMemoryStream.ToArray();
                 return objDataAsByte;
             }
