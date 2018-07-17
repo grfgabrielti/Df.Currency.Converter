@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ConversorDeMoedas.Domain\ConversorDeMoedas.Domain.csproj" />
+    <ProjectReference Include="..\ConversorDeMoedas.Infrastructure\ConversorDeMoedas.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
