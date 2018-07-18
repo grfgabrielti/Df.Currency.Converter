@@ -18,15 +18,19 @@ namespace ConversorDeMoedas.Infrastructure
         }
         public T Get<T>(String cacheKey)
         {
-            return Deserialize<T>(cache.Get(cacheKey));
+             var retorno = Deserialize<T>(cache.Get(cacheKey));
+            return retorno;
         }
         public byte[] Get(String cacheKey)
         {
-            return cache.Get(cacheKey);
+            var retorno = cache.Get(cacheKey);
+            return retorno;
         }
+
         public String GetString(String cacheKey)
         {
-            return cache.GetString(cacheKey);
+            var retorno = cache.GetString(cacheKey);
+            return retorno;
         }
         public void Set(String cacheKey, object cacheValue)
         {
@@ -64,7 +68,7 @@ namespace ConversorDeMoedas.Infrastructure
                 return objDataAsByte;
             }
         }
-        private static T Deserialize<T>(byte[] bytes)
+        public static T Deserialize<T>(byte[] bytes)
         {
             BinaryFormatter objBinaryFormatter = new BinaryFormatter();
             if (bytes == null)

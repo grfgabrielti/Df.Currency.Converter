@@ -13,6 +13,10 @@ using ConversorDeMoedas.Domain.Factory;
 using ConversorDeMoedas.Services.Request;
 using Microsoft.Extensions.Caching.Distributed;
 using ConversorDeMoedas.Infrastructure.Factory;
+using ConversorDeMoedas.Infrastructure;
+using ConversorDeMoedas.Infrastructure.Interface;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace ConversorDeMoedas.Services.Test
 {
@@ -89,14 +93,14 @@ namespace ConversorDeMoedas.Services.Test
         }
 
         [Fact]
-        public void TestDeConversaoDeMoedaAPIExterna()
+        public void TestDeConversaoDeMoedaAPIExternaSemContaçãoNoCache()
         {
             byte[] resultmockNull = null;
             Mock<IDistributedCache> mckcache = new Mock<IDistributedCache>();
             mckcache.Setup(x => x.Get("GetCotacaoComBaseNoDolarBRL")).Returns(resultmockNull);
             mckcache.Setup(x => x.Get("GetCotacaoComBaseNoDolarUSD")).Returns(resultmockNull);
 
-            IConversorService service = new ConversorService(new ConversorACLFactory(new MoedaFactory(),new RedisConnectorHelperFactory(mckcache.Object)), new MoedaFactory());
+            IConversorService service = new ConversorService(new ConversorACLFactory(new MoedaFactory(), new RedisConnectorHelperFactory(mckcache.Object)), new MoedaFactory());
             ConverterMoedaRequest request = new ConverterMoedaRequest()
             {
                 SiglaMoedaOrigem = "BRL",
@@ -109,5 +113,45 @@ namespace ConversorDeMoedas.Services.Test
             Assert.True(result != null);
             Assert.True(result.valor > 0 || result.valor < 0);
         }
+        [Fact]
+        public void TestDeConversaoDeMoedaAPIExternaComCotaçãoNoCache()
+        {
+            IMoeda MoedaDolar = new Moeda("USD", 1);
+            IMoeda MoedaReal = new Moeda("BRL", 3.85M);
+            Mock<IDistributedCache> mckcache = new Mock<IDistributedCache>();
+            RedisConnectorHelperFactory redisHelperFactory = new RedisConnectorHelperFactory(mckcache.Object);
+            IRedisConnectorHelper redisHelper = redisHelperFactory.Create();
+
+            mckcache.Setup(x => x.Get("GetCotacaoComBaseNoDolarBRL")).Returns(Serialize(MoedaReal));
+            mckcache.Setup(x => x.Get("GetCotacaoComBaseNoDolarUSD")).Returns(Serialize(MoedaDolar));
+            IConversorService service = new ConversorService(new ConversorACLFactory(new MoedaFactory(), new RedisConnectorHelperFactory(mckcache.Object)), new MoedaFactory());
+            ConverterMoedaRequest request = new ConverterMoedaRequest()
+            {
+                SiglaMoedaOrigem = "BRL",
+                MoedaParaConversao = "USD",
+                ValorParaConversao = 1M
+            };
+
+            var result = service.ConverterMoeda(request);
+
+            Assert.True(result != null);
+            Assert.True(result.valor > 0 || result.valor < 0);
+        }
+        private static byte[] Serialize(object obj)
+        {
+            if (obj == null)
+            {
+                return null;
+            }
+            BinaryFormatter objBinaryFormatter = new BinaryFormatter();
+            using (MemoryStream objMemoryStream = new MemoryStream())
+            {
+                objBinaryFormatter.Serialize(objMemoryStream, obj);
+                byte[] objDataAsByte = objMemoryStream.ToArray();
+                return objDataAsByte;
+            }
+        }
+
+
     }
 }
