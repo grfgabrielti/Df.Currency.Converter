@@ -37,7 +37,7 @@ namespace ConversorDeMoedas.ACL
         {
 
             IRedisConnectorHelper redisConnectorHelper = redisConnectorHelperFactory.Create();
-            String NomeCacheObject = "GetMoedasList1";
+            String NomeCacheObject = "GetMoedasList";
             var cacheValue = redisConnectorHelper.Get<List<IMoeda>>(NomeCacheObject);
 
             if (cacheValue == null)

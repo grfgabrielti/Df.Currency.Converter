@@ -15,15 +15,14 @@ namespace ConversorDeMoedas.ACL.Test
 {
     public class ConversorACLTest
     {
-        private readonly IDistributedCache _cache;
-
-
     
         [Fact]
         public void TestQueDeveRetornarListaComAsMoedasSemValorSomenteSiglaENome()
         {
-
-            IConversorACL conversorACL = new ConversorACL(new MoedaFactory(), new RedisConnectorHelperFactory(_cache));
+            byte[] resultmockNull = null;
+             Mock<IDistributedCache> mckcache = new Mock<IDistributedCache>();      
+            mckcache.Setup(x =>x.Get("GetMoedasList")).Returns(resultmockNull);
+            IConversorACL conversorACL = new ConversorACL(new MoedaFactory(), new RedisConnectorHelperFactory(mckcache.Object));
             List<IMoeda> result = conversorACL.GetMoedas();
             Assert.True(result.Count > 0);
         }
@@ -31,17 +30,16 @@ namespace ConversorDeMoedas.ACL.Test
         [Fact]
         public void TestQueRetornaACotacaoDaMoedaDesejadaComBaseNoDolar()
         {
-            //Mock<IDistributedCache> cache = new Mock<IDistributedCache>();
+           
+            // String SiglaMoedaDesejada = "USD";
 
-            //String SiglaMoedaDesejada = "USD";
+            // IConversorACL conversorACL = new ConversorACL(new MoedaFactory(), new RedisConnectorHelperFactory());
+            // IMoeda DolarResult = conversorACL.GetCotacaoComBaseNoDolar(SiglaMoedaDesejada);
+            // Assert.True(DolarResult.Valor.Equals(1));
 
-            //IConversorACL conversorACL = new ConversorACL(new MoedaFactory(), new RedisConnectorHelperFactory());
-            //IMoeda DolarResult = conversorACL.GetCotacaoComBaseNoDolar(SiglaMoedaDesejada);
-            //Assert.True(DolarResult.Valor.Equals(1));
-
-            //String OutraMoedaQueNaoTemValorDoDolar = "BRL";
-            //IMoeda RealResult = conversorACL.GetCotacaoComBaseNoDolar(OutraMoedaQueNaoTemValorDoDolar);
-            //Assert.False(RealResult.Valor.Equals(DolarResult.Valor));
+            // String OutraMoedaQueNaoTemValorDoDolar = "BRL";
+            // IMoeda RealResult = conversorACL.GetCotacaoComBaseNoDolar(OutraMoedaQueNaoTemValorDoDolar);
+            // Assert.False(RealResult.Valor.Equals(DolarResult.Valor));
         }
     }
 }
