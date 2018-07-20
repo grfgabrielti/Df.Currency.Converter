@@ -93,7 +93,7 @@ namespace ConversorDeMoedas.Services.Test
         }
 
         [Fact]
-        public void TestDeConversaoDeMoedaAPIExternaSemContaçãoNoCache()
+        public void TestDeConversaoDeMoedaAPIExternaSemContacaoNoCache()
         {
             byte[] resultmockNull = null;
             Mock<IDistributedCache> mckcache = new Mock<IDistributedCache>();
@@ -114,7 +114,7 @@ namespace ConversorDeMoedas.Services.Test
             Assert.True(result.valor > 0 || result.valor < 0);
         }
         [Fact]
-        public void TestDeConversaoDeMoedaAPIExternaComCotaçãoNoCache()
+        public void TestDeConversaoDeMoedaAPIExternaComCotacaoNoCache()
         {
             IMoeda MoedaDolar = new Moeda("USD", 1);
             IMoeda MoedaReal = new Moeda("BRL", 3.85M);

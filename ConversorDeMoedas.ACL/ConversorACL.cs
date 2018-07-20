@@ -55,7 +55,7 @@ namespace ConversorDeMoedas.ACL
                         {
                             var retorno = JsonConvert.DeserializeXNode(response.Content.ReadAsStringAsync().Result, "Root");
                             var resultado = retorno.Root.Element("currencies").Elements().Select(c => moedaFactory.Create(c.Name.ToString(), c.Value)).ToList();
-                            redisConnectorHelper.Set(NomeCacheObject, resultado, 60);
+                            redisConnectorHelper.Set(NomeCacheObject, resultado, 120);
                             return resultado;
                         }
                         else

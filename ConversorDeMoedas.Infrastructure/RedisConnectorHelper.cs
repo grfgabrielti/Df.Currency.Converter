@@ -14,11 +14,11 @@ namespace ConversorDeMoedas.Infrastructure
 
         public RedisConnectorHelper(IDistributedCache cache)
         {
-             this.cache = cache;
+            this.cache = cache;
         }
         public T Get<T>(String cacheKey)
         {
-             var retorno = Deserialize<T>(cache.Get(cacheKey));
+            var retorno = Deserialize<T>(cache.Get(cacheKey));
             return retorno;
         }
         public byte[] Get(String cacheKey)
@@ -34,25 +34,37 @@ namespace ConversorDeMoedas.Infrastructure
         }
         public void Set(String cacheKey, object cacheValue)
         {
+            if (String.IsNullOrEmpty(cacheKey) || cacheValue == null)
+                throw new Exception("Não é possivel definir um valor nulo ou vazio.");
+
             cache.Set(cacheKey, Serialize(cacheValue));
         }
         public void Set(String cacheKey, object cacheValue, Int32 TempoEmMinutos)
         {
-             DistributedCacheEntryOptions distributedCacheEntryOptions = new DistributedCacheEntryOptions();
-             distributedCacheEntryOptions.SetAbsoluteExpiration(TimeSpan.FromMinutes(TempoEmMinutos));
+           if (String.IsNullOrEmpty(cacheKey) || cacheValue == null)
+                throw new Exception("Não é possivel definir um valor nulo ou vazio.");
+
+            DistributedCacheEntryOptions distributedCacheEntryOptions = new DistributedCacheEntryOptions();
+            distributedCacheEntryOptions.SetAbsoluteExpiration(TimeSpan.FromMinutes(TempoEmMinutos));
 
             cache.Set(cacheKey, Serialize(cacheValue), distributedCacheEntryOptions);
         }
         public void SetString(String cacheKey, String cacheValue)
         {
-             cache.SetString(cacheKey, cacheValue);
+           if (String.IsNullOrEmpty(cacheKey) || String.IsNullOrEmpty(cacheValue))
+                throw new Exception("Não é possivel definir um valor nulo ou vazio.");
+
+            cache.SetString(cacheKey, cacheValue);
         }
         public void SetString(String cacheKey, String cacheValue, Int32 TempoEmMinutos)
         {
-             DistributedCacheEntryOptions distributedCacheEntryOptions = new DistributedCacheEntryOptions();
-             distributedCacheEntryOptions.SetAbsoluteExpiration(TimeSpan.FromMinutes(TempoEmMinutos));
+            if (String.IsNullOrEmpty(cacheKey) || String.IsNullOrEmpty(cacheValue))
+                throw new Exception("Não é possivel definir um valor nulo ou vazio.");
 
-             cache.SetString(cacheKey, cacheValue, distributedCacheEntryOptions);
+            DistributedCacheEntryOptions distributedCacheEntryOptions = new DistributedCacheEntryOptions();
+            distributedCacheEntryOptions.SetAbsoluteExpiration(TimeSpan.FromMinutes(TempoEmMinutos));
+
+            cache.SetString(cacheKey, cacheValue, distributedCacheEntryOptions);
         }
         private static byte[] Serialize(object obj)
         {
@@ -63,7 +75,7 @@ namespace ConversorDeMoedas.Infrastructure
             BinaryFormatter objBinaryFormatter = new BinaryFormatter();
             using (MemoryStream objMemoryStream = new MemoryStream())
             {
-                objBinaryFormatter.Serialize(objMemoryStream,obj);
+                objBinaryFormatter.Serialize(objMemoryStream, obj);
                 byte[] objDataAsByte = objMemoryStream.ToArray();
                 return objDataAsByte;
             }

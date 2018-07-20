@@ -35,7 +35,7 @@ namespace ConversorDeMoedas.ACL.Test
             Assert.True(result.Count > 0);
         }
         [Fact]
-        public void TestQueRetornaACotacaoDaMoedaDesejadaComBaseNoDolarSemInformaçõesEmCache()
+        public void TestQueRetornaACotacaoDaMoedaDesejadaComBaseNoDolarSemInformacoesEmCache()
         {
             IMoeda MoedaDolarMck = new Moeda("USD", 1);
             byte[] resultmockNull = null;
@@ -56,7 +56,7 @@ namespace ConversorDeMoedas.ACL.Test
             Assert.False(RealResult.Valor.Equals(DolarResult.Valor));
         }
         [Fact]
-        public void TestQueRetornaACotacaoDaMoedaDesejadaComBaseNoDolarComInformaçãoEmCache()
+        public void TestQueRetornaACotacaoDaMoedaDesejadaComBaseNoDolarComInformacoesEmCache()
         {
             IMoeda MoedaDolar = new Moeda("USD", 1);
             Mock<IDistributedCache> mckcache = new Mock<IDistributedCache>();
