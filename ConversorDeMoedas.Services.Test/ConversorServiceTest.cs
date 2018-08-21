@@ -95,7 +95,7 @@ namespace ConversorDeMoedas.Services.Test
         }
 
         [Fact]
-        public void TestDeConversaoDeMoedaAPIExternaSemContacaoNoCache()
+        public void TestDeConversaoDeMoedaAPIExternaSemCotacaoNoCache()
         {
             byte[] resultmockNull = null;
             Mock<IDistributedCache> mckcache = new Mock<IDistributedCache>();
@@ -116,9 +116,9 @@ namespace ConversorDeMoedas.Services.Test
             };
 
             var result = service.ConverterMoeda(request);
-
+ 
             Assert.True(result != null);
-            Assert.True(result.valor > 0 || result.valor < 0);
+            Assert.True(result.valor > 0 || result.valor <   0);
         }
         [Fact]
         public void TestDeConversaoDeMoedaAPIExternaComCotacaoNoCache()
