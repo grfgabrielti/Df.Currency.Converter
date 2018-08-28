@@ -46,6 +46,8 @@ namespace ConversorDeMoedas.ACL.Test
             byte[] resultmockNull = null;
             Mock<IDistributedCache> mckcache = new Mock<IDistributedCache>();
             Mock<IConfigurationHelper> mckconfigurationHelper = new Mock<IConfigurationHelper>();
+            mckconfigurationHelper.Setup(x => x.GetSection("ACCESS_KEY")).Returns("?access_key=1503440cbd4d453ce74962abd00a82c2");
+            mckconfigurationHelper.Setup(x => x.GetSection("BASE_URL")).Returns("http://apilayer.net/api/");
 
             mckcache.Setup(x => x.Get("GetCotacaoComBaseNoDolarUSD")).Returns(resultmockNull);
             DistributedCacheEntryOptions distributedCacheEntryOptions = new DistributedCacheEntryOptions();
