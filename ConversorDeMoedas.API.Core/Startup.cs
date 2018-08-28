@@ -44,8 +44,9 @@ namespace ConversorDeMoedas.API.Core
 
             services.AddDistributedRedisCache(options =>
             {
-                options.Configuration =
-                    Configuration.GetConnectionString("RedisConnection");
+                options.Configuration = Configuration.GetConnectionString("RedisConnection");
+                options.InstanceName = "ConversorDeMoedas";
+
             });
 
             services.AddMvc();

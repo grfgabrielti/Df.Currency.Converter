@@ -13,6 +13,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Xml.Linq;
+using Microsoft.Extensions.Configuration;
 
 namespace ConversorDeMoedas.ACL
 {
@@ -20,17 +21,16 @@ namespace ConversorDeMoedas.ACL
     {
         private Object GetMoedasLock = new Object();
         private Object GetCotacaoComBaseNoDolarLock = new Object();
-
-        String ACCESS_KEY = "?access_key=c33c35cf4405c47d42a77c2b6e2eb3d1";
-        String BASE_URL = "http://apilayer.net/api/";
+        private IConfigurationHelper Configuration { get; }
 
         IMoedaFactory moedaFactory;
         IRedisConnectorHelperFactory redisConnectorHelperFactory;
 
-        public ConversorACL(IMoedaFactory moedaFactory, IRedisConnectorHelperFactory redisConnectorHelperFactory)
+        public ConversorACL(IMoedaFactory moedaFactory, IRedisConnectorHelperFactory redisConnectorHelperFactory,IConfigurationHelper Configuration)
         {
             this.moedaFactory = moedaFactory;
             this.redisConnectorHelperFactory = redisConnectorHelperFactory;
+            this.Configuration = Configuration;
         }
 
         public List<IMoeda> GetMoedas()
@@ -48,9 +48,10 @@ namespace ConversorDeMoedas.ACL
 
                     if (cacheValue == null)
                     {
+
                         HttpClient client = new HttpClient();
-                        client.BaseAddress = new Uri(BASE_URL);
-                        HttpResponseMessage response = client.GetAsync("list" + ACCESS_KEY).Result;
+                        client.BaseAddress = new Uri(Configuration.GetSection("BASE_URL"));
+                        HttpResponseMessage response = client.GetAsync("list" + Configuration.GetSection("ACCESS_KEY")).Result;
                         if (response.IsSuccessStatusCode)
                         {
                             var retorno = JsonConvert.DeserializeXNode(response.Content.ReadAsStringAsync().Result, "Root");
@@ -71,7 +72,7 @@ namespace ConversorDeMoedas.ACL
         public IMoeda GetCotacaoComBaseNoDolar(String SiglasDaMoeda)
         {
             IRedisConnectorHelper redisConnectorHelper = redisConnectorHelperFactory.Create();
-            String NomeCacheObject = "GetCotacaoComBaseNoDolar"+SiglasDaMoeda;
+            String NomeCacheObject = "GetCotacaoComBaseNoDolar" + SiglasDaMoeda;
             var cacheValue = redisConnectorHelper.Get<IMoeda>(NomeCacheObject);
 
             if (cacheValue == null)
@@ -84,8 +85,10 @@ namespace ConversorDeMoedas.ACL
                     {
 
                         HttpClient client = new HttpClient();
-                        client.BaseAddress = new Uri(BASE_URL);
-                        HttpResponseMessage response = client.GetAsync("live" + ACCESS_KEY + "&currencies=" + SiglasDaMoeda).Result;
+                        String baseurl = Configuration.GetSection("BASE_URL");
+                        client.BaseAddress = new Uri(baseurl);
+                        String accesskey = Configuration.GetSection("ACCESS_KEY");
+                        HttpResponseMessage response = client.GetAsync("live" + accesskey + "&currencies=" + SiglasDaMoeda).Result;
                         if (response.IsSuccessStatusCode)
                         {
                             var retorno = JsonConvert.DeserializeXNode(response.Content.ReadAsStringAsync().Result, "Root");
