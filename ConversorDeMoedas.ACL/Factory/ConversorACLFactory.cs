@@ -1,6 +1,7 @@
 ﻿using ConversorDeMoedas.ACL.Interface;
 using ConversorDeMoedas.ACL.Interface.Factory;
 using ConversorDeMoedas.Domain.Interface.Factory;
+using ConversorDeMoedas.Infrastructure.Interface;
 using ConversorDeMoedas.Infrastructure.Interface.Factory;
 using Microsoft.Extensions.Configuration;
 
@@ -11,9 +12,9 @@ namespace ConversorDeMoedas.ACL.Factory
 
         IMoedaFactory moedaFactory;
         IRedisConnectorHelperFactory redisConnectorHelperFactory;
-        IConfiguration Configuration;
+        IConfigurationHelper Configuration;
 
-        public ConversorACLFactory(IMoedaFactory moedaFactory, IRedisConnectorHelperFactory redisConnectorHelperFactory,IConfiguration Configuration)
+        public ConversorACLFactory(IMoedaFactory moedaFactory, IRedisConnectorHelperFactory redisConnectorHelperFactory,IConfigurationHelper Configuration)
         {
             this.moedaFactory = moedaFactory;
             this.redisConnectorHelperFactory = redisConnectorHelperFactory;

@@ -26,15 +26,15 @@ namespace ConversorDeMoedas.ACL.Test
             List<IMoeda> mcklist = new List<IMoeda>();
             byte[] resultmockNull = null;
             Mock<IDistributedCache> mckcache = new Mock<IDistributedCache>();
-            Mock<IConfiguration> mckconfiguration = new Mock<IConfiguration>();
-            mckconfiguration.Setup(x => x.GetSection("ACCESS_KEY").Value).Returns("?access_key = c33c35cf4405c47d42a77c2b6e2eb3d1");
-            mckconfiguration.Setup(x => x.GetSection("BASE_URL").Value).Returns("http://apilayer.net/api/");
+            Mock<IConfigurationHelper> mckconfigurationHelper = new Mock<IConfigurationHelper>();
+            mckconfigurationHelper.Setup(x => x.GetSection("ACCESS_KEY")).Returns("?access_key=1503440cbd4d453ce74962abd00a82c2");
+            mckconfigurationHelper.Setup(x => x.GetSection("BASE_URL")).Returns("http://apilayer.net/api/");
             mckcache.Setup(x => x.Get("GetMoedasList")).Returns(resultmockNull);
 
             DistributedCacheEntryOptions distributedCacheEntryOptions = new DistributedCacheEntryOptions();
             distributedCacheEntryOptions.SetAbsoluteExpiration(TimeSpan.FromMinutes(1));
             mckcache.Setup(x => x.Set("GetMoedasList", Serialize(mcklist), distributedCacheEntryOptions));
-            IConversorACL conversorACL = new ConversorACL(new MoedaFactory(), new RedisConnectorHelperFactory(mckcache.Object),mckconfiguration.Object);
+            IConversorACL conversorACL = new ConversorACL(new MoedaFactory(), new RedisConnectorHelperFactory(mckcache.Object),mckconfigurationHelper.Object);
             List<IMoeda> result = conversorACL.GetMoedas();
             Assert.True(result.Count > 0);
         }
@@ -45,13 +45,13 @@ namespace ConversorDeMoedas.ACL.Test
             IMoeda MoedaDolarMck = new Moeda("USD", 1);
             byte[] resultmockNull = null;
             Mock<IDistributedCache> mckcache = new Mock<IDistributedCache>();
-            Mock<IConfiguration> mckconfiguration = new Mock<IConfiguration>();
+            Mock<IConfigurationHelper> mckconfigurationHelper = new Mock<IConfigurationHelper>();
 
             mckcache.Setup(x => x.Get("GetCotacaoComBaseNoDolarUSD")).Returns(resultmockNull);
             DistributedCacheEntryOptions distributedCacheEntryOptions = new DistributedCacheEntryOptions();
             distributedCacheEntryOptions.SetAbsoluteExpiration(TimeSpan.FromMinutes(1));
             mckcache.Setup(x => x.Set("GetCotacaoComBaseNoDolarUSD", Serialize(MoedaDolarMck), distributedCacheEntryOptions));
-            IConversorACL conversorACL = new ConversorACL(new MoedaFactory(), new RedisConnectorHelperFactory(mckcache.Object),mckconfiguration.Object);
+            IConversorACL conversorACL = new ConversorACL(new MoedaFactory(), new RedisConnectorHelperFactory(mckcache.Object),mckconfigurationHelper.Object);
             IMoeda DolarResult = conversorACL.GetCotacaoComBaseNoDolar(MoedaDolarMck.SiglaMoeda);
             Assert.True(DolarResult.Valor.Equals(1));
 
@@ -67,7 +67,7 @@ namespace ConversorDeMoedas.ACL.Test
         {
             IMoeda MoedaDolar = new Moeda("USD", 1);
             Mock<IDistributedCache> mckcache = new Mock<IDistributedCache>();
-            Mock<IConfiguration> mckconfiguration = new Mock<IConfiguration>();
+            Mock<IConfigurationHelper> mckConfigurationHelper = new Mock<IConfigurationHelper>();
 
             RedisConnectorHelperFactory redisHelperFactory = new RedisConnectorHelperFactory(mckcache.Object);
             IRedisConnectorHelper redisHelper = redisHelperFactory.Create();
@@ -77,7 +77,7 @@ namespace ConversorDeMoedas.ACL.Test
             distributedCacheEntryOptions.SetAbsoluteExpiration(TimeSpan.FromMinutes(1));
             mckcache.Setup(x => x.Set("GetCotacaoComBaseNoDolarUSD", Serialize(MoedaDolar), distributedCacheEntryOptions));
 
-            IConversorACL conversorACL = new ConversorACL(new MoedaFactory(), new RedisConnectorHelperFactory(mckcache.Object),mckconfiguration.Object);
+            IConversorACL conversorACL = new ConversorACL(new MoedaFactory(), new RedisConnectorHelperFactory(mckcache.Object),mckConfigurationHelper.Object);
             IMoeda DolarResult = conversorACL.GetCotacaoComBaseNoDolar(MoedaDolar.SiglaMoeda);
             Assert.True(DolarResult.Valor.Equals(1));
             IMoeda MoedaBRL = new Moeda("BRL", 3.86M);

@@ -21,12 +21,12 @@ namespace ConversorDeMoedas.ACL
     {
         private Object GetMoedasLock = new Object();
         private Object GetCotacaoComBaseNoDolarLock = new Object();
-        private IConfiguration Configuration { get; }
+        private IConfigurationHelper Configuration { get; }
 
         IMoedaFactory moedaFactory;
         IRedisConnectorHelperFactory redisConnectorHelperFactory;
 
-        public ConversorACL(IMoedaFactory moedaFactory, IRedisConnectorHelperFactory redisConnectorHelperFactory,IConfiguration Configuration)
+        public ConversorACL(IMoedaFactory moedaFactory, IRedisConnectorHelperFactory redisConnectorHelperFactory,IConfigurationHelper Configuration)
         {
             this.moedaFactory = moedaFactory;
             this.redisConnectorHelperFactory = redisConnectorHelperFactory;
@@ -50,8 +50,8 @@ namespace ConversorDeMoedas.ACL
                     {
 
                         HttpClient client = new HttpClient();
-                        client.BaseAddress = new Uri(Configuration.GetSection("BASE_URL").Value);
-                        HttpResponseMessage response = client.GetAsync("list" + Configuration.GetSection("ACCESS_KEY").Value).Result;
+                        client.BaseAddress = new Uri(Configuration.GetSection("BASE_URL"));
+                        HttpResponseMessage response = client.GetAsync("list" + Configuration.GetSection("ACCESS_KEY")).Result;
                         if (response.IsSuccessStatusCode)
                         {
                             var retorno = JsonConvert.DeserializeXNode(response.Content.ReadAsStringAsync().Result, "Root");
@@ -85,9 +85,9 @@ namespace ConversorDeMoedas.ACL
                     {
 
                         HttpClient client = new HttpClient();
-                        String baseurl = Configuration.GetSection("BASE_URL").Value;
+                        String baseurl = Configuration.GetSection("BASE_URL");
                         client.BaseAddress = new Uri(baseurl);
-                        String accesskey = Configuration.GetSection("ACCESS_KEY").Value;
+                        String accesskey = Configuration.GetSection("ACCESS_KEY");
                         HttpResponseMessage response = client.GetAsync("live" + accesskey + "&currencies=" + SiglasDaMoeda).Result;
                         if (response.IsSuccessStatusCode)
                         {
