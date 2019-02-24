@@ -36,14 +36,7 @@ namespace ConversorDeMoedas.Infrastructure.Test
             Assert.True(moeda.Equals(resultDescerialize));
 
         }
-        public void TestGetComRetornDoTipoString()
-        {
-
-            //Teste deve analisar o retorno do metodo GetString 
-            //Não estou conseguindo definir uma variavel string para retorno mock do redis
-            //Mas funciona.. 
-            //Precisa analisar melhor esse teste com calma...
-        }
+        
         [Fact]
         public void TestStandoValoresNulosOuEmBranco()
         {
