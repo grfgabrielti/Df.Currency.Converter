@@ -3,5 +3,14 @@ mono: none
 dotnet: 2.1.502
 script:
  - dotnet restore
- - dotnet test
+#  - dotnet test ConversorDeMoedas.Domain.Test/ConversorDeMoedas.Domain.Test
+#  - dotnet test ConversorDeMoedas.Infrastructure.Test/ConversorDeMoedas.Infrastructure.Test
+#  - dotnet test ConversorDeMoedas.services.Test/ConversorDeMoedas.services.Test
  - dotnet build
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  keep_history: true
+  on:
+    branch: master
