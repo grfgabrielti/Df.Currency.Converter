@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConversorDeMoedas.API.Core", "ConversorDeMoedas.API.Core\ConversorDeMoedas.API.Core.csproj", "{15BDE2A4-FBD9-42BF-AF81-3275BED88688}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConversorDeMoedas.Domain", "ConversorDeMoedas.Domain\ConversorDeMoedas.Domain.csproj", "{FB1EED55-043F-4A9C-93A3-E87B1BE3189C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConversorDeMoedas.ACL", "ConversorDeMoedas.ACL\ConversorDeMoedas.ACL.csproj", "{81955227-80A5-4E79-BC24-32471645027F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConversorDeMoedas.Services", "ConversorDeMoedas.Services\ConversorDeMoedas.Services.csproj", "{EECA77AF-3667-421C-8FC9-9BC308143B33}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConversorDeMoedas.ACL.Test", "ConversorDeMoedas.ACL.Test\ConversorDeMoedas.ACL.Test.csproj", "{BC593087-596F-481A-8B2C-7E46DAAAFABC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConversorDeMoedas.Domain.Test", "ConversorDeMoedas.Domain.Test\ConversorDeMoedas.Domain.Test.csproj", "{08DBA45E-8E03-4F49-B811-DFC8ACEC889C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConversorDeMoedas.Services.Test", "ConversorDeMoedas.Services.Test\ConversorDeMoedas.Services.Test.csproj", "{85916CE2-1FD9-4354-8038-4DCFBB077A73}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConversorDeMoedas.UI.Core", "ConversorDeMoedas.UI.Core\ConversorDeMoedas.UI.Core.csproj", "{AA529714-083A-4567-A9C5-E2EB963F57BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConversorDeMoedas.Infrastructure", "ConversorDeMoedas.Infrastructure\ConversorDeMoedas.Infrastructure.csproj", "{2AEBBE23-8FE7-40DB-8C8D-86739DF90FA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConversorDeMoedas.Infrastructure.Test", "ConversorDeMoedas.Infrastructure.Test\ConversorDeMoedas.Infrastructure.Test.csproj", "{EFA49C3E-CF13-408B-95CC-EBD472ECE9B6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{15BDE2A4-FBD9-42BF-AF81-3275BED88688}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15BDE2A4-FBD9-42BF-AF81-3275BED88688}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15BDE2A4-FBD9-42BF-AF81-3275BED88688}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15BDE2A4-FBD9-42BF-AF81-3275BED88688}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB1EED55-043F-4A9C-93A3-E87B1BE3189C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB1EED55-043F-4A9C-93A3-E87B1BE3189C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB1EED55-043F-4A9C-93A3-E87B1BE3189C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB1EED55-043F-4A9C-93A3-E87B1BE3189C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81955227-80A5-4E79-BC24-32471645027F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81955227-80A5-4E79-BC24-32471645027F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81955227-80A5-4E79-BC24-32471645027F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81955227-80A5-4E79-BC24-32471645027F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EECA77AF-3667-421C-8FC9-9BC308143B33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EECA77AF-3667-421C-8FC9-9BC308143B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EECA77AF-3667-421C-8FC9-9BC308143B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EECA77AF-3667-421C-8FC9-9BC308143B33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC593087-596F-481A-8B2C-7E46DAAAFABC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC593087-596F-481A-8B2C-7E46DAAAFABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC593087-596F-481A-8B2C-7E46DAAAFABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC593087-596F-481A-8B2C-7E46DAAAFABC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08DBA45E-8E03-4F49-B811-DFC8ACEC889C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08DBA45E-8E03-4F49-B811-DFC8ACEC889C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08DBA45E-8E03-4F49-B811-DFC8ACEC889C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08DBA45E-8E03-4F49-B811-DFC8ACEC889C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85916CE2-1FD9-4354-8038-4DCFBB077A73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85916CE2-1FD9-4354-8038-4DCFBB077A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85916CE2-1FD9-4354-8038-4DCFBB077A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85916CE2-1FD9-4354-8038-4DCFBB077A73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA529714-083A-4567-A9C5-E2EB963F57BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA529714-083A-4567-A9C5-E2EB963F57BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA529714-083A-4567-A9C5-E2EB963F57BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA529714-083A-4567-A9C5-E2EB963F57BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AEBBE23-8FE7-40DB-8C8D-86739DF90FA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AEBBE23-8FE7-40DB-8C8D-86739DF90FA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AEBBE23-8FE7-40DB-8C8D-86739DF90FA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AEBBE23-8FE7-40DB-8C8D-86739DF90FA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFA49C3E-CF13-408B-95CC-EBD472ECE9B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFA49C3E-CF13-408B-95CC-EBD472ECE9B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFA49C3E-CF13-408B-95CC-EBD472ECE9B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFA49C3E-CF13-408B-95CC-EBD472ECE9B6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7637F40C-CCEE-4CB1-8608-5461C76B7507}
+	EndGlobalSection
+EndGlobal
