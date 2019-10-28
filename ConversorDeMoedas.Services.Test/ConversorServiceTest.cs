@@ -54,7 +54,7 @@ namespace ConversorDeMoedas.Services.Test
             Mock<IDistributedCache> mckcache = new Mock<IDistributedCache>();
             mckcache.Setup(x => x.Get("GetMoedasList")).Returns(resultmockNull);
             Mock<IConfigurationHelper> mckconfigurationHelper = new Mock<IConfigurationHelper>();
-            mckconfigurationHelper.Setup(x => x.GetSection("ACCESS_KEY")).Returns("?access_key=1503440cbd4d453ce74962abd00a82c2");
+            mckconfigurationHelper.Setup(x => x.GetSection("ACCESS_KEY")).Returns("?access_key=000baa3e87af3e0b078a3bfbb6249876");
             mckconfigurationHelper.Setup(x => x.GetSection("BASE_URL")).Returns("http://apilayer.net/api/");
 
             IConversorService service = new ConversorService(new ConversorACLFactory(new MoedaFactory(), new RedisConnectorHelperFactory(mckcache.Object),mckconfigurationHelper.Object), new MoedaFactory());
@@ -105,7 +105,7 @@ namespace ConversorDeMoedas.Services.Test
 
             mckcache.Setup(x => x.Get("GetCotacaoComBaseNoDolarBRL")).Returns(resultmockNull);
             mckcache.Setup(x => x.Get("GetCotacaoComBaseNoDolarUSD")).Returns(resultmockNull);
-            mckconfigurationHelper.Setup(x => x.GetSection("ACCESS_KEY")).Returns("?access_key=1503440cbd4d453ce74962abd00a82c2");
+            mckconfigurationHelper.Setup(x => x.GetSection("ACCESS_KEY")).Returns("?access_key=000baa3e87af3e0b078a3bfbb6249876");
             mckconfigurationHelper.Setup(x => x.GetSection("BASE_URL")).Returns("http://apilayer.net/api/");
                             
 

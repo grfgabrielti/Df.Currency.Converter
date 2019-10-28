@@ -3,9 +3,9 @@ mono: none
 dotnet: 2.1.502
 script:
  - dotnet restore
-#  - dotnet test ConversorDeMoedas.Domain.Test/ConversorDeMoedas.Domain.Test
-#  - dotnet test ConversorDeMoedas.Infrastructure.Test/ConversorDeMoedas.Infrastructure.Test
-#  - dotnet test ConversorDeMoedas.services.Test/ConversorDeMoedas.services.Test
+ - dotnet test ConversorDeMoedas.services.Test/ConversorDeMoedas.Services.Test.csproj
+ - dotnet test ConversorDeMoedas.Domain.Test/ConversorDeMoedas.Domain.Test.csproj
+ - dotnet test ConversorDeMoedas.Infrastructure.Test/ConversorDeMoedas.Infrastructure.Test.csproj
  - dotnet build
 deploy:
   provider: pages

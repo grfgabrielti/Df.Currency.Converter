@@ -27,7 +27,7 @@ namespace ConversorDeMoedas.ACL.Test
             byte[] resultmockNull = null;
             Mock<IDistributedCache> mckcache = new Mock<IDistributedCache>();
             Mock<IConfigurationHelper> mckconfigurationHelper = new Mock<IConfigurationHelper>();
-            mckconfigurationHelper.Setup(x => x.GetSection("ACCESS_KEY")).Returns("?access_key=1503440cbd4d453ce74962abd00a82c2");
+            mckconfigurationHelper.Setup(x => x.GetSection("ACCESS_KEY")).Returns("?access_key=000baa3e87af3e0b078a3bfbb6249876");
             mckconfigurationHelper.Setup(x => x.GetSection("BASE_URL")).Returns("http://apilayer.net/api/");
             mckcache.Setup(x => x.Get("GetMoedasList")).Returns(resultmockNull);
 
@@ -46,7 +46,7 @@ namespace ConversorDeMoedas.ACL.Test
             byte[] resultmockNull = null;
             Mock<IDistributedCache> mckcache = new Mock<IDistributedCache>();
             Mock<IConfigurationHelper> mckconfigurationHelper = new Mock<IConfigurationHelper>();
-            mckconfigurationHelper.Setup(x => x.GetSection("ACCESS_KEY")).Returns("?access_key=1503440cbd4d453ce74962abd00a82c2");
+            mckconfigurationHelper.Setup(x => x.GetSection("ACCESS_KEY")).Returns("?access_key=000baa3e87af3e0b078a3bfbb6249876");
             mckconfigurationHelper.Setup(x => x.GetSection("BASE_URL")).Returns("http://apilayer.net/api/");
 
             mckcache.Setup(x => x.Get("GetCotacaoComBaseNoDolarUSD")).Returns(resultmockNull);
