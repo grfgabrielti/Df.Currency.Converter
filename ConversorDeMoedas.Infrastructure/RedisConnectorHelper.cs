@@ -29,8 +29,9 @@ namespace ConversorDeMoedas.Infrastructure
 
         public String GetString(String cacheKey)
         {
-            var retorno = cache.GetString(cacheKey);
-            return retorno;
+            var retorno = cache.Get(cacheKey);
+            var result = Convert.ToString(retorno);
+            return result;
         }
         public void Set(String cacheKey, object cacheValue)
         {

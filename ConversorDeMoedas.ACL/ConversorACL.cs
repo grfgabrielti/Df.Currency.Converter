@@ -102,5 +102,23 @@ namespace ConversorDeMoedas.ACL
             }
             return cacheValue;
         }
+
+        public string GetRedis(string key)
+        {
+
+            IRedisConnectorHelper redisConnectorHelper = redisConnectorHelperFactory.Create();
+            String NomeCacheObject = key;
+            var cacheValue = redisConnectorHelper.GetString(NomeCacheObject);
+
+            return cacheValue;
+        }
+
+        public void SetRedis()
+        {
+
+            IRedisConnectorHelper redisConnectorHelper = redisConnectorHelperFactory.Create();
+            String NomeCacheObject = "PortfolioMock";
+            redisConnectorHelper.SetString(NomeCacheObject, "Gabriel");
+        }
     }
 }

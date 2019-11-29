@@ -3,6 +3,8 @@ using ConversorDeMoedas.ACL.Interface.Factory;
 using ConversorDeMoedas.Domain;
 using ConversorDeMoedas.Domain.Interface;
 using ConversorDeMoedas.Domain.Interface.Factory;
+using ConversorDeMoedas.Infrastructure.Interface;
+using ConversorDeMoedas.Infrastructure.Interface.Factory;
 using ConversorDeMoedas.Services.Interface;
 using ConversorDeMoedas.Services.Request;
 using ConversorDeMoedas.Services.Request.Result;
@@ -15,6 +17,7 @@ namespace ConversorDeMoedas.Services
     {
         IConversorACLFactory conversorACLFactory;
         IMoedaFactory moedaFactory;
+
         public ConversorService(IConversorACLFactory conversorACLFactory, IMoedaFactory moedaFactory)
         {
             this.conversorACLFactory = conversorACLFactory;
@@ -45,6 +48,21 @@ namespace ConversorDeMoedas.Services
                 valor = MoedaConvertida.Valor
             };
             return result;
+        }
+
+
+        public string TestRedis(string key)
+        {
+            IConversorACL conversorACL = conversorACLFactory.Create();
+
+            return conversorACL.GetRedis(key);
+        }
+
+        public void TestSetRedis()
+        {
+            IConversorACL conversorACL = conversorACLFactory.Create();
+
+            conversorACL.SetRedis();
         }
     }
 }

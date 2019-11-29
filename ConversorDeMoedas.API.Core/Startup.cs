@@ -50,12 +50,14 @@ namespace ConversorDeMoedas.API.Core
             });
 
             services.AddMvc();
+            services.AddTransient<IRedisConnectorHelperFactory, RedisConnectorHelperFactory>();
+            services.AddTransient<IRedisConnectorHelper, RedisConnectorHelper>();
             services.AddTransient<IConversorServiceFactory, ConversorServiceFactory>();
             services.AddTransient<IConversorService, ConversorService>();
             services.AddTransient<IConversorACLFactory, ConversorACLFactory>();
             services.AddTransient<IMoedaFactory, MoedaFactory>();
-            services.AddTransient<IRedisConnectorHelperFactory, RedisConnectorHelperFactory>();
-            services.AddTransient<IRedisConnectorHelper, RedisConnectorHelper>();
+            services.AddTransient<IConfigurationHelper, ConfigurationHelper>();
+ 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

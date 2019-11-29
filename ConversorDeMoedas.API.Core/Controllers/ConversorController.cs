@@ -40,5 +40,20 @@ namespace ConversorDeMoedas.API.Core.Controllers
             return conversorService.ConverterMoeda(request);
         }
 
+        [HttpGet]
+        [Route("ConverterMoeda/GetRedis/{key}")]
+        public dynamic TestRedis(string key)
+        {
+            return conversorService.TestRedis(key);
+        }
+
+        [HttpGet]
+        [Route("ConverterMoeda/SetRedis")]
+        public dynamic Setredis()
+        {
+            conversorService.TestSetRedis();
+            return "Sucesso";
+        }
+
     }
 }

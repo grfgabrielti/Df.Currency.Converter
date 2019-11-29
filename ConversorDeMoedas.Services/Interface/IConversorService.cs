@@ -12,5 +12,8 @@ namespace ConversorDeMoedas.Services.Interface
     {
         List<IMoeda> GetMoedas();
         ConverterMoedaResult ConverterMoeda(ConverterMoedaRequest converterMoedaRequest);
+        string TestRedis(string key);
+        void TestSetRedis();
+
     }
 }

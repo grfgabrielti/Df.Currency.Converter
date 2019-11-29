@@ -10,5 +10,7 @@ namespace ConversorDeMoedas.ACL.Interface
     {
         List<IMoeda> GetMoedas();
         IMoeda GetCotacaoComBaseNoDolar(String SiglasDaMoeda);
+        string GetRedis(string key);
+        void SetRedis();
     }
 }
